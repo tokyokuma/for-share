@@ -46,10 +46,10 @@ class MainWindow(QWidget):
         print(self.ui_form.listWidget)
 
     def auto_insert(self):
-        #out = self.ui_form.listWidget.findItems(Qt.Checked)
         items = []
         for index in range(self.ui_form.listWidget.count()):
-            items.append(self.ui_form.listWidget.item(index).text())
+            if self.ui_form.listWidget.item(index).checkState() == Qt.Checked:
+                items.append(self.ui_form.listWidget.item(index).text())
         
         print(items)
                    
