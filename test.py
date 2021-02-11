@@ -119,3 +119,126 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+void main(void)
+{
+    static uint8_t set_conditions_flg = 0;
+
+    if(set_conditions_flg = OFF){
+        set_conditions();
+        start_unten();
+        set_condition_flg = ON;
+    }
+    else{
+        if(t_rnk確定){
+            t_rnk上書き
+        }
+        if(F_X_SENZ == OFF)
+            print_zantime();
+            set_condition_flg = ON;
+    }
+}
+
+
+
+void set_conditions(void)
+{
+    static uint8_t course_cnt = 0;
+    static uint8_t kishu_cnt = 0;
+    static WITH_PATTERN with_pattern = WITH_WATER_LEVEL;
+    uint8_t max_count_flg = OFF;
+
+    condition_init();
+
+    t_table2 = condition_list[course_cnt].course_code;
+    t_kishu = condition_list[kishu_cnt].kishu_code;
+    max_count_flg = set_condition(with_pattern);
+
+    if(max_count_flg == ON){
+       with_pattern++;
+    }
+
+    if(WITH_PATTERN_NUM < with_pattern){
+        with_pattern = 0;
+        kishu_cnt++;
+    }
+    if(KISHU_NUM < kishu_cnt ){
+        kishu_cnt = 0;
+        course_cnt++;
+    }
+    if(COURSE_NUM < course_cnt){
+        course_cnt = 0;
+    }
+}
+
+uint8_t set_condition(WITH_PATTERN with_pattern)
+{
+    static uint8_t cnt = 0;
+    static WITH_SPECIAL_PATTERN with_special_pattern = WITH_S_NONE;
+    const uint8_t max_count[] = {WATER_LEVEL_NUM, CWD_RANK_NUM};
+    uint8_t max_s_count_flg = 0;
+    uint8_t flg = 0;
+
+    switch(with_pattern){
+        case WITH_WATER_LEVEL:
+            procset();
+            t_proc6 = condition_list[cnt].water_level;
+            max_s_count_flg = set_special_condition(with_special_pattern);
+            break;
+        case WITH_CWD_RANK:
+            procset();
+            t_rnk0_temp = condition_list[cnt].cwd_rank;
+            max_s_count_flg = set_special_condition(with_special_pattern)
+            break;
+        case WITH_AIRJET:
+            if(t_table2 <=乾燥){
+                cnt = 0;
+                with_special_pattern = WITH_S_NONE;
+                flg = 1;
+            }
+            else{
+                t_proc5
+            }
+            break;
+        default:
+            break;
+    }
+
+    if(max_f_count_flg == ON){
+        with_special_pattern++;
+    }
+    if(WITH_SPECIAL_PATTERN_NUM < with_special_pattern){
+        with_special_pattern = 0;
+        cnt++;
+    }
+    if(max_count[pattern] < cnt){
+        cnt = 0;
+        flg = ON;
+    }
+
+    retunrn (flg);
+}
+
+void special_setting(WITH_SPECIAL_PATTERN with_special_pattern)
+{
+    uint8_t flg = 0;
+
+    special_setting_init();
+
+    switch(pattern){
+        case WITH_S_NONE:
+            break;
+        case WITH_S_NSUSU:
+            break;
+        case WITH_S_ASC:
+            break;
+        default:
+            break;
+    }
+
+    if(with_special_pattern < WITH_SPECIAL_PATTERN_NUM){
+        flg = ON;
+    }
+
+    return(flg);
+}
